@@ -19,7 +19,7 @@ default_args = {
 }
 
 dag = DAG(
-    "Tweets",
+    dag_id = "Tweets",
     default_args = default_args,
     schedule_interval = "0 */1 * * *"
 )

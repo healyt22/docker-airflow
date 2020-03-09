@@ -1,7 +1,7 @@
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 
+from operators.odds import OddsApiOperator
 
 default_args = {
     "owner": "healz",
@@ -17,3 +17,15 @@ default_args = {
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
+
+dag = DAG(
+    dag_id = "Odds",
+    default_args = default_args,
+    schedule_interval = "0 */1 * * *"
+)
+
+t1 = OddsApiOperator(
+    task_id = 'GetSports',
+    endpoint = 'sports',
+    dag = dag
+)
