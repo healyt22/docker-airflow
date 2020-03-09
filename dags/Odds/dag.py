@@ -6,7 +6,7 @@ from operators.odds import OddsApiOperator
 default_args = {
     "owner": "healz",
     "depends_on_past": False,
-    "start_date": datetime(2020, 2, 14),
+    "start_date": datetime(2020, 3, 7),
     "email": ["healyt22@gmail.com.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -21,7 +21,7 @@ default_args = {
 dag = DAG(
     dag_id = "Odds",
     default_args = default_args,
-    schedule_interval = "0 */1 * * *"
+    schedule_interval = "0 11 * * *"
 )
 
 t1 = OddsApiOperator(
