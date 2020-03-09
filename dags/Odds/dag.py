@@ -1,6 +1,7 @@
-from airflow import DAG
+import os
 from datetime import datetime, timedelta
 
+from airflow import DAG
 from operators.odds import OddsApiOperator
 
 DATA_DIR = '/media/montebello/odds_api'
