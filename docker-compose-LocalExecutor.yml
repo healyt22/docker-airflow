@@ -25,6 +25,8 @@ services:
                 max-file: "3"
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ~/git:/usr/local/airflow/git
+            - /media/montebello:/media/montebello
             # - ./plugins:/usr/local/airflow/plugins
         ports:
             - "8080:8080"
