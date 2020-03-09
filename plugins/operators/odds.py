@@ -27,7 +27,7 @@ class OddsApiOperator(BaseOperator):
 
         keys_path = os.path.join(AIRFLOW_HOME, 'plugins', 'keys.yaml')
         with open(keys_path, 'r') as f:
-            self.api_key = yaml.safe_load(f)
+            self.api_key = yaml.safe_load(f).get('odds-api')
 
     def execute(self, context):
         url = 'https://api.the-odds-api.com'

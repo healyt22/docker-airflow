@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 
 from operators.odds import OddsApiOperator
 
+DATA_DIR = '/media/montebello/odds_api'
+
 default_args = {
     "owner": "healz",
     "depends_on_past": False,
@@ -24,8 +26,10 @@ dag = DAG(
     schedule_interval = "0 11 * * *"
 )
 
+out_filepath = f{}
 t1 = OddsApiOperator(
     task_id = 'GetSports',
     endpoint = 'sports',
+    out_filepath = os.path.join(DATA_DIR, 'sports', '{{ ds }}.json')
     dag = dag
 )
