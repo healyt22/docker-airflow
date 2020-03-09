@@ -12,7 +12,7 @@ AIRFLOW_HOME = os.environ['AIRFLOW_HOME']
 
 
 class OddsApiOperator(BaseOperator):
-    template_fields = ('endpoint',)
+    template_fields = ('endpoint', 'out_filepath')
     ui_color = '#A3E4D7'
 
     @apply_defaults
