@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 
 from airflow import DAG
-from operators.odds import OddsApiOperator
+from operators.odds import OddsApiToJSON
 
 DATA_DIR = '/media/montebello/odds_api'
 
@@ -14,11 +14,7 @@ default_args = {
     "email_on_failure": False,
     "email_on_retry": False,
     "retries": 1,
-    "retry_delay": timedelta(minutes=5),
-    # 'queue': 'bash_queue',
-    # 'pool': 'backfill',
-    # 'priority_weight': 10,
-    # 'end_date': datetime(2016, 1, 1),
+    "retry_delay": timedelta(minutes=5)
 }
 
 dag = DAG(
@@ -27,9 +23,23 @@ dag = DAG(
     schedule_interval = "0 11 * * *"
 )
 
-t1 = OddsApiOperator(
+t1 = OddsApiToJSON(
     task_id = 'GetSports',
     endpoint = 'sports',
     out_filepath = os.path.join(DATA_DIR, 'sports', '{{ ds }}.json'),
     dag = dag
 )
+
+t2 = OddsApiToJSON(
+    task_id = 'GetOdds',
+    endpoint = 'odds',
+    params = {
+        'sport': 'basketball_nba',
+        'region': 'us', # uk | us | eu | au
+        'mkt': 'spreads' # h2h | spreads | totals
+    },
+    out_filepath = os.path.join(DATA_DIR, 'odds', '{{ ds }}.json'),
+    dag = dag
+)
+
+t1 >> t2
